@@ -1,26 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Switch, Route, Link, Redirect, withRouter } from 'react-router-dom';
+import { Container, Row, Col } from 'reactstrap';
+import ExampleStepper from './components/ExampleStepper';
 
-function App() {
+import logo from './logo.svg'
+import './App.css'
+
+function HomeContent(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <p className="App-intro">
+      
+    </p>
+  )
 }
 
-export default App;
+function NotFound(props) {
+  return (
+    <p className="App-intro">
+      Not sure what you were trying to find.. but it isn't there..
+    </p>
+  )
+}
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <div className="App-header">
+          <h2>Driving Test</h2>
+        </div>
+
+        <Container>
+          <Row>
+            <Col>&nbsp;</Col>
+            <Col><Link to="/">Home</Link></Col>
+            <Col><Link to="/stepper">Stepper</Link></Col>
+            <Col>&nbsp;</Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Switch>
+                <Route exact path="/" component={HomeContent}/>
+                <Route path="/stepper/:step" component={ExampleStepper} />
+                <Route path="/stepper" render={() => <Redirect to="/stepper/0"/>}/>
+                <Route path="/notFound" component={NotFound} />
+                <Redirect to="/notFound"/>
+              </Switch>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    // foo: state.foo,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // foo: () => dispatch(foo()),
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
