@@ -1,18 +1,32 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {prevStep, nextStep, jumpStep} from '../../actions/index';
-import {Link, Redirect} from 'react-router-dom';
-import {Container, Row, Col, Progress} from 'reactstrap';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { prevStep, nextStep, jumpStep } from '../../actions/index';
+import { Link, Redirect } from 'react-router-dom';
+import { Container, Row, Col, Progress } from 'reactstrap';
 import './ExampleStepper.css';
 import DriverDetails from '../DriverDetails';
 import CompanyInformation from '../CompanyInformation';
+import DriverInformation from '../../DriverInformation';
+import Partone from './Partone';
+import Parttwo from './Parttwo';
+import Partthree from './Partthree';
+import Partfour from './Partfour';
+import Partfive from './Partfive';
+import Partsix from './Partsix';
+import Partseven from './Partseven';
 
 const steps = [
-  {label: "Driver details", content: <DriverDetails />},
-  {label: "Company Information", content: <CompanyInformation />},
-  {label: "Part 3c", content: <p>I am some content 3!</p>},
-  {label: "Part 4d", content: <p>I am some content 4!</p>, disabled: true},
-  {label: "Part 5d", content: <p>I am some content 5!</p>},
+
+
+  { label: "Part-1", content: <Partone /> },
+  { label: "Part-2", content: <Parttwo /> },
+  { label: "Part-3", content: <Partthree /> },
+  { label: "Part-4", content: <Partfour /> },
+  { label: "Part-5", content: <Partfive /> },
+  { label: "Part-6", content: <Partsix /> },
+  // { label: "Part-9", content: <p>I am some content 4!</p>, disabled: true },
+  { label: "Part-7", content: <Partseven /> },
+
 ];
 
 class ExampleStepper extends Component {
@@ -41,7 +55,7 @@ class ExampleStepper extends Component {
       } else {
         const curIndex = i;
         label = (
-          <Link to={`./${i}`} onClick={() => this.props.jumpStep(curIndex)}>
+          <Link to={`./${i}`} onClick={() => this.props.jumpStep(curIndex)} class="col-md-12 mb-6">
             {steps[i].label}
           </Link>
         );
@@ -73,7 +87,7 @@ class ExampleStepper extends Component {
 
   render() {
     if (this.props.match.params.step !== this.props.current.toString()) {
-      return <Redirect to={`/stepper/${this.props.current}`}/>
+      return <Redirect to={`/stepper/${this.props.current}`} />
     }
 
     return (
@@ -92,8 +106,8 @@ class ExampleStepper extends Component {
 
         <Row>
           <Col>
-            {this.hasPrev() && <button onClick={() => this.props.prevStep()} className="btn btn-default">Prev</button>}
-            {this.hasNext() && <button onClick={() => this.props.nextStep()} className="btn btn-primary">Next</button>}
+            {this.hasPrev() && <button onClick={() => this.props.prevStep()} className="btn btn-default btn-lg">Prev</button>}
+            {this.hasNext() && <button onClick={() => this.props.nextStep()} className="btn btn-primary btn-lg">Next</button>}
           </Col>
         </Row>
       </Container>
